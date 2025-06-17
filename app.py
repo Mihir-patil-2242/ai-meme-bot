@@ -35,7 +35,7 @@ def generate_caption(topic):
 def create_meme_image(caption, uploaded_img, font_path="ComicNeue-Bold.ttf"):
     img = Image.open(uploaded_img)
     img_width = img.width
-    size = int(img_width / 15)
+    size = 32
 
     try:
         font = ImageFont.truetype(font_path, size)

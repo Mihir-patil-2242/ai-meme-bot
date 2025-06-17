@@ -3,10 +3,8 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 import streamlit as st
 
-# 🔐 Load API key from Streamlit secrets (not .env)
 api_key = st.secrets["OPENROUTER_API_KEY"]
 
-# 💬 Step 1: Generate Caption
 def generate_caption(topic):
     url = "https://openrouter.ai/api/v1/chat/completions"
     headers = {
@@ -34,36 +32,46 @@ def generate_caption(topic):
     except Exception as e:
         return f"Error: {e}"
 
-# 🖼️ Step 2: Add Caption to Image
 def create_meme_image(caption, uploaded_img, font_path="ComicNeue-Bold.ttf"):
     img = Image.open(uploaded_img)
     img_width = img.width
-    size = int(img_width / 15)  # dynamic size based on image width
-    font = ImageFont.truetype(font_path, size)
-    
-    img = Image.open(uploaded_img)
-    draw = ImageDraw.Draw(img)
+    size = int(img_width / 15)
 
     try:
         font = ImageFont.truetype(font_path, size)
-    except:
+        print("✅ Custom font loaded")
+    except Exception as e:
+        print("❌ Font load failed:", e)
         font = ImageFont.load_default()
 
     caption = caption.strip().replace('\n', ' ')
+    draw = ImageDraw.Draw(img)
 
-    draw.text((1000, 1000), result, font=font, fill="black",stroke_width =10, stroke_fill="white")
+    # Adjust position (example: top center)
+    text_width, text_height = draw.textsize(caption, font=font)
+    x = (img.width - text_width) // 2
+    y = 30
 
-# ✅ FIX: Convert before saving (this is REQUIRED for JPEGs)
+    # Draw caption with stroke
+    draw.text(
+        (x, y),
+        caption,
+        font=font,
+        fill="white",
+        stroke_width=2,
+        stroke_fill="black"
+    )
+
     if img.mode != "RGB":
         img = img.convert("RGB")
-             
 
     output_path = "web_meme.jpg"
-    img.save(output_path, format="JPEG")  # explicitly tell it JPEG format
+    img.save(output_path, format="JPEG")
     return output_path
 
 
-# 🖥️ Step 3: Streamlit UI
+
+
 st.set_page_config(page_title="AI Meme Generator", layout="centered")
 st.title("🤖 AI Meme Generator")
 
@@ -80,10 +88,10 @@ if st.button("Generate Meme"):
             caption = generate_caption(topic)
             meme_path = create_meme_image(caption, uploaded_file)
 
-            # show image
+           
             st.image(meme_path, caption=caption)
 
-            # allow download
+           
             with open(meme_path, "rb") as file:
                 st.download_button(
                     label="📥 Download Meme",

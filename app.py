@@ -57,7 +57,8 @@ def create_meme_image(caption, uploaded_img, font_path="impact.ttf", size=32):
 
 # ✅ FIX: Convert before saving (this is REQUIRED for JPEGs)
     if img.mode != "RGB":
-    img = img.convert("RGB")
+        img = img.convert("RGB")
+             
 
     output_path = "web_meme.jpg"
     img.save(output_path, format="JPEG")  # explicitly tell it JPEG format

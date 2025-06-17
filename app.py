@@ -16,7 +16,7 @@ def generate_caption(topic):
         "model": "mistralai/mistral-7b-instruct",
         "messages": [
             {"role": "system", "content": "You are a meme expert. Generate short, funny captions. No explanations."},
-            {"role": "user", "content": f"Generate ONLY ONE short, funny meme caption about: {topic}. Do NOT return multiple lines, lists, examples, or explanations. Just return one sentence in plain text.No hashtags. No emojis."}
+            {"role": "user", "content": f"Generate ONLY ONE short, funny meme caption about: {topic}. Do NOT return multiple lines, lists, examples, or explanations. Just return one sentence in plain text.No hashtags. No emojis. And funny."}
 
 
         ]

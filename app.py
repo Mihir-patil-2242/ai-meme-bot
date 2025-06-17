@@ -18,7 +18,8 @@ def generate_caption(topic):
         "model": "mistralai/mistral-7b-instruct",
         "messages": [
             {"role": "system", "content": "You are a meme expert. Generate short, funny captions. No explanations."},
-            {"role": "user", "content": f"Generate a short, funny meme caption about: {topic}"}
+            {"role": "user", "content": f"Generate only one short, funny meme caption about: {topic}. Do not return multiple lines, quotes, or explanations. Just return one sentence."}
+
         ]
     }
 
@@ -42,21 +43,13 @@ def create_meme_image(caption, uploaded_img, font_path="ComicNeue-Bold.ttf", siz
     except:
         font = ImageFont.load_default()
 
-    max_width = 40
-    lines = []
-    while len(caption) > max_width:
-        space_index = caption.rfind(" ", 0, max_width)
-        if space_index == -1:
-            space_index = max_width
-        lines.append(caption[:space_index])
-        caption = caption[space_index:].strip()
-    lines.append(caption)
-    caption_text = "\n".join(lines)
+    caption_text = caption.strip()
+
     image_width = img.width
     text_width, _ = draw.textsize(caption_text, font=font)
     x = (image_width - text_width) // 2
     y = 30  # push it slightly down from the top
-    draw.text((10, 10), caption_text, font=font, fill="white",stroke_width =2, stroke_fill="black")
+    draw.text((x, y), caption_text, font=font, fill="white",stroke_width =2, stroke_fill="black")
 
 # ✅ FIX: Convert before saving (this is REQUIRED for JPEGs)
     if img.mode != "RGB":

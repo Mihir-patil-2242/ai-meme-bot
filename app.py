@@ -18,7 +18,8 @@ def generate_caption(topic):
         "model": "mistralai/mistral-7b-instruct",
         "messages": [
             {"role": "system", "content": "You are a meme expert. Generate short, funny captions. No explanations."},
-            {"role": "user", "content": f"Generate only one short, funny meme caption about: {topic}. Do not return multiple lines, quotes, or explanations. Just return one sentence."}
+            {"role": "user", "content": f"Generate ONLY ONE short, funny meme caption about: {topic}. Do NOT return multiple lines, lists, examples, or explanations. Just return one sentence in plain text."}
+
 
         ]
     }
@@ -34,7 +35,7 @@ def generate_caption(topic):
         return f"Error: {e}"
 
 # 🖼️ Step 2: Add Caption to Image
-def create_meme_image(caption, uploaded_img, font_path="ComicNeue-Bold.ttf", size=64):
+def create_meme_image(caption, uploaded_img, font_path="ComicNeue-Bold.ttf", size=100):
     img = Image.open(uploaded_img)
     draw = ImageDraw.Draw(img)
 
@@ -43,13 +44,9 @@ def create_meme_image(caption, uploaded_img, font_path="ComicNeue-Bold.ttf", siz
     except:
         font = ImageFont.load_default()
 
-    caption_text = caption.strip()
+    caption = caption.strip().replace('\n', ' ')
 
-    image_width = img.width
-    text_width, _ = draw.textsize(caption_text, font=font)
-    x = (image_width - text_width) // 2
-    y = 30  # push it slightly down from the top
-    draw.text((x, y), caption_text, font=font, fill="white",stroke_width =2, stroke_fill="black")
+    draw.text((100, 100), result, font=font, fill="white",stroke_width =2, stroke_fill="black")
 
 # ✅ FIX: Convert before saving (this is REQUIRED for JPEGs)
     if img.mode != "RGB":

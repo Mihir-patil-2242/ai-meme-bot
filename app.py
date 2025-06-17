@@ -33,7 +33,7 @@ def generate_caption(topic):
         return f"Error: {e}"
 
 # 🖼️ Step 2: Add Caption to Image
-def create_meme_image(caption, uploaded_img, font_path="impact.ttf", size=32):
+def create_meme_image(caption, uploaded_img, font_path="ComicNeue-Bold.ttf", size=64):
     img = Image.open(uploaded_img)
     draw = ImageDraw.Draw(img)
 
@@ -52,8 +52,11 @@ def create_meme_image(caption, uploaded_img, font_path="impact.ttf", size=32):
         caption = caption[space_index:].strip()
     lines.append(caption)
     caption_text = "\n".join(lines)
-
-    draw.text((10, 10), caption_text, font=font, fill="white")
+    image_width = img.width
+    text_width, _ = draw.textsize(caption_text, font=font)
+    x = (image_width - text_width) // 2
+    y = 30  # push it slightly down from the top
+    draw.text((10, 10), caption_text, font=font, fill="white",stroke_width =2, stroke_fill="black")
 
 # ✅ FIX: Convert before saving (this is REQUIRED for JPEGs)
     if img.mode != "RGB":

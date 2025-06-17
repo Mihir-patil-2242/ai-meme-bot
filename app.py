@@ -54,9 +54,15 @@ def create_meme_image(caption, uploaded_img, font_path="impact.ttf", size=32):
     caption_text = "\n".join(lines)
 
     draw.text((10, 10), caption_text, font=font, fill="white")
-    output_path = "web_meme.jpg"
-    img.save(output_path)
-    return output_path
+
+# ✅ Convert image before saving
+if img.mode != "RGB":
+    img = img.convert("RGB")
+
+output_path = "web_meme.jpg"
+img.save(output_path)
+return output_path
+
 
 # 🖥️ Step 3: Streamlit UI
 st.set_page_config(page_title="AI Meme Generator", layout="centered")

@@ -55,13 +55,13 @@ def create_meme_image(caption, uploaded_img, font_path="impact.ttf", size=32):
 
     draw.text((10, 10), caption_text, font=font, fill="white")
 
-# ✅ Convert image before saving
-if img.mode != "RGB":
+# ✅ FIX: Convert before saving (this is REQUIRED for JPEGs)
+    if img.mode != "RGB":
     img = img.convert("RGB")
 
-output_path = "web_meme.jpg"
-img.save(output_path)
-return output_path
+    output_path = "web_meme.jpg"
+    img.save(output_path, format="JPEG")  # explicitly tell it JPEG format
+    return output_path
 
 
 # 🖥️ Step 3: Streamlit UI

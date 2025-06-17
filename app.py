@@ -44,7 +44,10 @@ def create_meme_image(caption, uploaded_img, font_path="ComicNeue-Bold.ttf"):
         print("❌ Font load failed:", e)
         font = ImageFont.load_default()
 
+    import textwrap
     caption = caption.strip().replace('\n', ' ')
+    wrapped = textwrap.fill(caption, width=30)
+
     draw = ImageDraw.Draw(img)
 
     # Adjust position (example: top center)

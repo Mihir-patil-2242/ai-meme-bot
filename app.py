@@ -52,7 +52,7 @@ def create_meme_image(caption, uploaded_img, font_path="ComicNeue-Bold.ttf"):
     text_width = bbox[2] - bbox[0]
     text_height = bbox[3] - bbox[1]
 
-    x = 30
+    x = (img_width - text_width) // 2
     y = 30
 
     # Draw caption with stroke

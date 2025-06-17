@@ -48,8 +48,11 @@ def create_meme_image(caption, uploaded_img, font_path="ComicNeue-Bold.ttf"):
     draw = ImageDraw.Draw(img)
 
     # Adjust position (example: top center)
-    text_width, text_height = draw.textsize(caption, font=font)
-    x = (img.width - text_width) // 2
+    bbox = draw.textbbox((0, 0), caption, font=font)
+    text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+
+    x = 30
     y = 30
 
     # Draw caption with stroke

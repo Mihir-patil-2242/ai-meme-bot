@@ -76,12 +76,12 @@ if st.button("Generate Meme"):
             meme_path = create_meme_image(caption, uploaded_file)
             st.image(meme_path, caption=caption)
 
-# Download button
-with open(meme_path, "rb") as file:
-    btn = st.download_button(
-        label="📥 Download Meme",
-        data=file,
-        file_name="your_meme.jpg",
-        mime="image/jpeg"
-    )
+            # ✅ MOVE DOWNLOAD BUTTON HERE
+            with open(meme_path, "rb") as file:
+                st.download_button(
+                    label="📥 Download Meme",
+                    data=file,
+                    file_name="your_meme.jpg",
+                    mime="image/jpeg"
+                )
 

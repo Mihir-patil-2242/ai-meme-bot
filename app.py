@@ -74,14 +74,16 @@ if st.button("Generate Meme"):
         with st.spinner("Generating..."):
             caption = generate_caption(topic)
             meme_path = create_meme_image(caption, uploaded_file)
+
+            # show image
             st.image(meme_path, caption=caption)
 
-        with open(meme_path, "rb") as file:
-            st.download_button(
-            label="📥 Download Meme",
-            data=file,
-            file_name="your_meme.jpg",
-            mime="image/jpeg"
-    )
-
+            # allow download
+            with open(meme_path, "rb") as file:
+                st.download_button(
+                    label="📥 Download Meme",
+                    data=file,
+                    file_name="your_meme.jpg",
+                    mime="image/jpeg"
+                )
 

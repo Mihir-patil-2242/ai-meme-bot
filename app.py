@@ -62,7 +62,6 @@ def create_meme_image(caption, uploaded_img, font_path="ComicNeue-Bold.ttf"):
     # Draw caption with stroke
     draw.text(
         (x, y), wrapped,
-        caption,
         font=font,
         fill="white",
         stroke_width=2,
